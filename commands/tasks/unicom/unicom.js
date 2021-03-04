@@ -42,10 +42,10 @@
  *
  *
  */
-const { scheduler } = require("../../../utils/scheduler");
+//const { createScheduler } = require("../../../utils/scheduler");
 
 var start = async (params) => {
-  const { cookies, options } = params;
+  const { cookies, options, scheduler } = params;
 
   let init = async (request, savedCookies) => {
     await require("./init")(request, {
