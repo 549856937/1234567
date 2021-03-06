@@ -4,7 +4,7 @@ const fs = require('fs-extra')
 var moment = require('moment');
 moment.locale('zh-cn');
 const { getCookies, saveCookies, delCookiesFile } = require('./util')
-const { TryNextError } = require('./EnumError')
+const { TryNextEvent, CompleteEvent } = require('./EnumError')
 const _request = require('./request')
 var crypto = require('crypto');
 const { default: PQueue } = require('p-queue');
@@ -337,8 +337,15 @@ let scheduler = {
                             scheduler.updateTaskFile(task, newTask)
                         }
                     } catch (err) {
-                        if (err instanceof TryNextError) {
+                        if (err instanceof TryNextEvent) {
                             console.info(err.message)
+                        } else if (err instanceof CompleteEvent) {
+                            console.info(err.message)
+                            let newTask = {
+                                failNum: 0,
+                                taskState: 1
+                            }
+                            scheduler.updateTaskFile(task, newTask)
                         } else {
                             console.info('任务错误：', err)
                             if (task.failNum > 3) {
