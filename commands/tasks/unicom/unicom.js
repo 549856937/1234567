@@ -41,9 +41,9 @@ var start = async (params) => {
   }, taskOption)
 
   // 首页-积分商城-定向积分专区-每日抽奖(1次免费及5次花费定向积分抽奖)
-//  await scheduler.regTask('dailylotteryintegral', async (request) => {
-//    await require('./dailyShop').dailyintegrallottery(request, options)
-//  }, taskOption)
+  await scheduler.regTask('dailylotteryintegral', async (request) => {
+    await require('./dailyShop').dailyintegrallottery(request, options)
+  }, taskOption)
 
   // 首页-游戏-娱乐中心-沃之树
   await scheduler.regTask('dailywoTree', async (request) => {
@@ -83,8 +83,8 @@ var start = async (params) => {
   await scheduler.regTask('dailyBookRead10doDraw', async (request) => {
     // 首页-小说-读满10章赢好礼
     await require('./dailyVideoBook').read10doDraw(request, options)
-    // 首页-签到有礼-免流量得福利-3积分天天拿(阅读打卡)
-    await require('./dailyVideoBook').giftBoints(request, options)
+    // 首页-签到有礼-免流量得福利-3积分天天拿(阅读打卡) 已下线
+    // await require('./dailyVideoBook').giftBoints(request, options)
   }, taskOption)
 
   // 首页-小说-章节详情-看视频领积分
@@ -332,9 +332,9 @@ var start = async (params) => {
 
 
   // 我的钱包-沃钱包-幸运抽大奖
-  // await scheduler.regTask('dailyepay', async (request) => {
-  //   await require('./dailyepay').doTask(request, options)
-  // }, taskOption)
+  await scheduler.regTask('dailystw', async (request) => {
+    await require('./dailystw').doTask(request, options)
+  }, taskOption)
 
 
   // 沃钱包-联通支付日-转盘抽奖
@@ -383,7 +383,7 @@ var start = async (params) => {
   })
 
   // 每日0点自动兑换流量
- /* await scheduler.regTask('exchangeDFlow', async (request) => {
+  await scheduler.regTask('exchangeDFlow', async (request) => {
     await require('./exchangeDFlow').doTask(request, options)
   }, {
     ...taskOption,
@@ -391,7 +391,7 @@ var start = async (params) => {
     startHours: 0,
     ignoreRelay: true
   })
-*/
+
   // 定时检测流量兑换
   // 可使用 --exchangeDFlowCircle-intervalTime 1800 选项指定流量检查间隔时间，单位秒
   // 可使用 --exchangeDFlowCircle-minFlow 200 选项指定流量检查最小值
@@ -406,7 +406,7 @@ var start = async (params) => {
     ...taskOption,
     isCircle: true,
     intervalTime: intervalTime,
-    startTime: 30 * 60,
+    startTime: 5 * 60,
     ignoreRelay: true
   })
 
