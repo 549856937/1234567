@@ -12,7 +12,7 @@ module.exports = (axios) => {
         throw new Error(result.message||result.data.verifyInfo.msg)
       } else {
         let userInfo = result.data
-        console.log(`获取用户状态成功  nickname:%s`,userInfo.userInfo.nickname.substr(0, 2) + "********")
+        console.info(`获取用户状态成功  nickname:%s`,userInfo.userInfo.nickname.substr(0, 2) + "********")
         resolve(userInfo)
       }
     }).catch(reject)

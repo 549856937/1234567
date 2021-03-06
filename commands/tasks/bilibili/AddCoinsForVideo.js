@@ -12,11 +12,11 @@ var GetNeedDonateCoins = async (axios, options) => {
   let targetCoins = options.NumberOfCoins > MaxNumberOfDonateCoins
     ? MaxNumberOfDonateCoins
     : options.NumberOfCoins
-  console.log("目标投币：", targetCoins)
+  console.info("目标投币：", targetCoins)
   if (targetCoins > alreadyCoins) {
     needCoins = targetCoins - alreadyCoins;
   }
-  console.log("需要投币：", needCoins)
+  console.info("需要投币：", needCoins)
 
   result = await todayCoinBalance(axios)
   return {
@@ -37,7 +37,7 @@ var todayCoins = (axios) => {
       url: `https://api.bilibili.com/x/web-interface/coin/today/exp`,
       method: 'get'
     }).then(res => {
-      console.log("今日已获得投币经验: " + res.data.data);
+      console.info("今日已获得投币经验: " + res.data.data);
       resolve(res.data)
     }).catch(reject)
   })
@@ -53,7 +53,7 @@ var todayCoinBalance = (axios) => {
       url: `https://account.bilibili.com/site/getCoin`,
       method: 'post'
     }).then(res => {
-      console.log("当前硬币余额：" + res.data.data.money);
+      console.info("当前硬币余额：" + res.data.data.money);
       resolve(res.data)
     }).catch(reject)
   })
@@ -95,7 +95,7 @@ var TryGetNotDonatedVideo = async (axios) => {
       }
     }
     let s = Math.floor(Math.random() * 20)
-    console.log('等待%s秒再继续', s)
+    console.info('等待%s秒再继续', s)
     await new Promise((resolve, reject) => setTimeout(resolve, s * 1000))
   } while (tryCount <= 10)
   return video
@@ -152,7 +152,7 @@ var AddCoinForVideo = (axios, video, options) => {
     }).then(res => {
       resolve(res.data)
     }).catch((rr) => {
-      console.log(rr.response)
+      console.info(rr.response)
       reject()
     })
   })
@@ -161,7 +161,7 @@ var tryAddCoinForVideo = async (axios, options) => {
   let video = await TryGetNotDonatedVideo(axios)
   let result = {}
   if (video) {
-    console.log("正在为“%s”投币", video.title)
+    console.info("正在为“%s”投币", video.title)
     result = await AddCoinForVideo(axios, video, options)
   }
   return {
@@ -174,16 +174,16 @@ module.exports = async (axios, options) => {
   const { alreadyCoins, targetCoins, needCoins, coinBalance } = await GetNeedDonateCoins(axios, options)
   return new Promise(async (resolve, reject) => {
     if (needCoins <= 0) {
-      console.log("随机视频投币：已完成投币任务，今天不需要再投啦");
+      console.info("随机视频投币：已完成投币任务，今天不需要再投啦");
     } else {
-      console.log("还需再投%s枚硬币", needCoins);
+      console.info("还需再投%s枚硬币", needCoins);
       if (coinBalance <= 0) {
-        console.log("因硬币余额不足，今日暂不执行投币任务");
+        console.info("因硬币余额不足，今日暂不执行投币任务");
       } else {
         //余额小于目标投币数，按余额投
         if (coinBalance < needCoins) {
           needCoins = coinBalance
-          console.log("因硬币余额不足，目标投币数调整为: %s", needCoins);
+          console.info("因硬币余额不足，目标投币数调整为: %s", needCoins);
         }
         let successCoins = 0;
         let tryCount = 0;
@@ -191,23 +191,23 @@ module.exports = async (axios, options) => {
           let { result, video } = await tryAddCoinForVideo(axios, options)
           if (video) {
             if (result.code !== 0) {
-              console.log("为“%s”投币失败，原因：%s", video.title, result.message);
+              console.info("为“%s”投币失败，原因：%s", video.title, result.message);
             } else {
-              console.log("为“%s”投币成功", video.title);
+              console.info("为“%s”投币成功", video.title);
               successCoins = successCoins + options.CoinsForVideo;
             }
           }
           tryCount++;
           if (tryCount > 10) {
-            console.log("尝试投币次数超过10次，投币任务终止");
+            console.info("尝试投币次数超过10次，投币任务终止");
             break
           }
           let s = Math.floor(Math.random() * 20)
-          console.log('等待%s秒再继续', s)
+          console.info('等待%s秒再继续', s)
           await new Promise((resolve, reject) => setTimeout(resolve, s * 1000))
         }
         let resultCoinBalance = await todayCoinBalance(axios)
-        console.log("投币任务完成，余额为: " + resultCoinBalance.data.money);
+        console.info("投币任务完成，余额为: " + resultCoinBalance.data.money);
       }
     }
     resolve()

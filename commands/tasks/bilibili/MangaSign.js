@@ -11,7 +11,7 @@ module.exports = async (axios) => {
     }).then(res => {
       resolve(res.data)
     }).catch(err => {
-      console.log("漫画签到：今日已签到过,无法重复签到")
+      console.info("漫画签到：今日已签到过,无法重复签到")
       resolve()
     })// 400 clockin clockin is duplicat
   })

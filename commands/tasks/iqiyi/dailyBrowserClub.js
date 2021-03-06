@@ -10,7 +10,7 @@ function w () {
 }
 
 module.exports = async (axios) => {
-  console.log('浏览会员俱乐部任务')
+  console.info('浏览会员俱乐部任务')
   
   let P00001 = undefined
   let QC005 = undefined
@@ -42,7 +42,7 @@ module.exports = async (axios) => {
     url: "".concat("https://tc.vip.iqiyi.com/taskCenter/task/joinTask", "?").concat(w(p)),
   })
   if(res.data.code==='A00000'){
-    console.log('领取浏览会员俱乐部任务成功')
+    console.info('领取浏览会员俱乐部任务成功')
 
     await axios.request({
       headers: {
@@ -75,12 +75,12 @@ module.exports = async (axios) => {
     })
     data = res.data.data
     if (res.data.code === 'A00000' && data.length) {
-      console.log('浏览会员俱乐部任务：', "签到成功！成长值+1点")
+      console.info('浏览会员俱乐部任务：', "签到成功！成长值+1点")
     } else {
-      console.log('浏览会员俱乐部任务：', res.data.message||"无")
+      console.info('浏览会员俱乐部任务：', res.data.message||"无")
     }
 
   } else {
-    console.log('领取浏览会员俱乐部任务失败：', res.data.msg)
+    console.info('领取浏览会员俱乐部任务失败：', res.data.msg)
   }
 }

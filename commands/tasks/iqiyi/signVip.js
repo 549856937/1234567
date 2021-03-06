@@ -29,7 +29,7 @@ function w() {
 }
 var sign = {
   querySignInfo: async (axios) => {
-    console.log('查询签到状态')
+    console.info('查询签到状态')
     let P00001 = undefined
     axios.defaults.headers.Cookie.split('; ').forEach(item => {
       if (item.indexOf('P00001') === 0) {
@@ -58,14 +58,14 @@ var sign = {
     })
     if (data.code === 'A00000') {
       let { isSign, continueSignDaysSum, todayGrowth } = data.data
-      console.log(isSign === 'yes' ? `今日已签到，连续签到${continueSignDaysSum}天，成长值+${todayGrowth}` : '今日还未签到')
+      console.info(isSign === 'yes' ? `今日已签到，连续签到${continueSignDaysSum}天，成长值+${todayGrowth}` : '今日还未签到')
       return isSign !== 'yes'
     } else {
-      console.log(data.msg)
+      console.info(data.msg)
     }
   },
   vipSign: async (axios) => {
-    console.log('进行VIP签到')
+    console.info('进行VIP签到')
     let P00001 = undefined
     let QC005 = undefined
     axios.defaults.headers.Cookie.split('; ').forEach(item => {
@@ -95,11 +95,11 @@ var sign = {
     })
     data = res.data.data
     if (res.data.code === 'A00000') {
-      console.log('成长值签到：', "签到成功！成长值+" + data.rewardMap.growth + "点，积分+" + data.rewardMap.integral + "点！", res.data.msg, '已连续签到：', data.signReached, '天')
+      console.info('成长值签到：', "签到成功！成长值+" + data.rewardMap.growth + "点，积分+" + data.rewardMap.integral + "点！", res.data.msg, '已连续签到：', data.signReached, '天')
     } else {
-      console.log('成长值签到：', res.data.msg)
+      console.info('成长值签到：', res.data.msg)
       if (data) {
-        console.log('已连续签到：', data.continueSignDaysSum, '天')
+        console.info('已连续签到：', data.continueSignDaysSum, '天')
       }
     }
   }

@@ -67,7 +67,7 @@ module.exports = {
       }
       let history = JSON.parse(res.data)
       let videoPlayTime = (history.data && history.data.videoPlayTime) ? history.data.videoPlayTime : 1
-      console.log('videoPlayTime', videoPlayTime)
+      console.info('videoPlayTime', videoPlayTime)
       do {
         let report = `https://l-rcd.iqiyi.com/apis/qiyirc/setrc.php?tvId=${tvid}&terminalId=11&agent_type=1&videoPlayTime=${videoPlayTime}`
         videoPlayTime = videoPlayTime + 300 + parseInt(Math.random() * 30)
@@ -82,7 +82,7 @@ module.exports = {
         if (res.data.indexOf('A00000') === -1) {
           continue
         }
-        console.log('上报播放时长', video.name, videoPlayTime)
+        console.info('上报播放时长', video.name, videoPlayTime)
         await new Promise((resolve, reject) => {
           setTimeout(resolve, 20 * 1000)
         })
@@ -107,7 +107,7 @@ module.exports = {
         'userId': P00PRU,
         'verticalCode': 'iQIYI'
       }
-      console.log('查询观看视频任务状态')
+      console.info('查询观看视频任务状态')
       var c = k("UKobMjDMsDoScuWOfp6F", a, {
         split: "|",
         sort: !0,
@@ -124,11 +124,11 @@ module.exports = {
       })
 
       if (res.data.code !== 'A00000') {
-        console.log(res.data.message)
+        console.info(res.data.message)
         continue
       } else {
         let it = res.data.data[0].find(i => i.channelCode === 'view_pcw')
-        console.log('任务进度：已完成', it.processCount, '次')
+        console.info('任务进度：已完成', it.processCount, '次')
         if (it.processCount >= 3) {
           isComplete = true
           break

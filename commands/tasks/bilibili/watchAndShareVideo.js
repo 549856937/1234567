@@ -33,9 +33,9 @@ var WatchVideo = (axios, videoInfo) => {
       method: 'post'
     }).then(res => {
       if (res.data.code == 0) {
-        console.log("视频播放成功,已观看到第%s秒", playedTime);
+        console.info("视频播放成功,已观看到第%s秒", playedTime);
       } else {
-        console.log("视频播放失败,原因：%s", res.data.message);
+        console.info("视频播放失败,原因：%s", res.data.message);
       }
       resolve(res.data)
     }).catch(reject)
@@ -53,9 +53,9 @@ var ShareVideo = (axios, videoInfo, bili_jct) => {
       method: 'post'
     }).then(res => {
       if (res.data.code == 0) {
-        console.log("视频分享成功");
+        console.info("视频分享成功");
       } else {
-        console.log("视频分享失败,原因：%s", res.data.message);
+        console.info("视频分享失败,原因：%s", res.data.message);
       }
       resolve(res.data)
     }).catch(reject)
@@ -78,12 +78,12 @@ module.exports = async (axios, dailyTaskStatus) => {
       if (!dailyTaskStatus.watch)
         await WatchVideo(axios, videoInfo);
       else
-        console.log("今天已经观看过了，不需要再看啦");
+        console.info("今天已经观看过了，不需要再看啦");
 
       if (!dailyTaskStatus.share)
         await ShareVideo(axios, videoInfo, bili_jct);
       else
-        console.log("今天已经分享过了，不要再分享啦");
+        console.info("今天已经分享过了，不要再分享啦");
     }
     resolve()
   })

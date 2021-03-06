@@ -9,9 +9,9 @@ module.exports = async (axios) => {
       method: 'get'
     }).then(res => {
       if (res.data.code === 0) {
-        console.log("直播中心签到：", '签到成功')
+        console.info("直播中心签到：", '签到成功')
       } else {
-        console.log("直播中心签到：", res.data.message)
+        console.info("直播中心签到：", res.data.message)
       }
       resolve(res.data)
     }).catch(reject)

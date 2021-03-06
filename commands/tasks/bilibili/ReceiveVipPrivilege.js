@@ -18,12 +18,12 @@ var ReceiveVipPrivilege = async (axios, type) => {
     }).then(res => {
       if (res.data.code == 0) {
         if (type == 1) {
-          console.log("领取年度大会员每月赠送的B币券成功");
+          console.info("领取年度大会员每月赠送的B币券成功");
         } else if (type == 2) {
-          console.log("领取大会员福利/权益成功");
+          console.info("领取大会员福利/权益成功");
         }
       } else {
-        console.log("领取年度大会员每月赠送的B币券/大会员福利失败，原因：%s", res.data.message);
+        console.info("领取年度大会员每月赠送的B币券/大会员福利失败，原因：%s", res.data.message);
       }
       resolve(res.data)
     }).catch(err => {
@@ -42,13 +42,13 @@ module.exports = async (axios, options) => {
           await ReceiveVipPrivilege(axios, 1)
           await ReceiveVipPrivilege(axios, 2)
         } else {
-          console.log("普通会员和月度大会员每月不赠送B币券，所以不需要领取权益喽");
+          console.info("普通会员和月度大会员每月不赠送B币券，所以不需要领取权益喽");
         }
       } else {
-        console.log("目标领取日期为%s号，今天是%s号，跳过领取任务", DayOfReceiveVipPrivilege, day);
+        console.info("目标领取日期为%s号，今天是%s号，跳过领取任务", DayOfReceiveVipPrivilege, day);
       }
     } else {
-      console.log("已配置为不进行自动领取会员权益，跳过领取任务");
+      console.info("已配置为不进行自动领取会员权益，跳过领取任务");
     }
   }
 }

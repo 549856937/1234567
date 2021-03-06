@@ -27,7 +27,7 @@ function w () {
     t.join("&")
 }
 module.exports = async (axios) => {
-  console.log('普通用户积分签到')
+  console.info('普通用户积分签到')
 
   let P00001 = undefined
   let P00PRU = undefined
@@ -78,14 +78,14 @@ module.exports = async (axios) => {
     let data = result.data[0]
     if (result.code === 'A00000') {
       if (data.code === 'A0000') {
-        console.log('积分签到：', '积分变动增加' + data.score)
+        console.info('积分签到：', '积分变动增加' + data.score)
       } else {
-        console.log('积分签到：', data.message)
+        console.info('积分签到：', data.message)
       }
     } else {
-      console.log('积分签到：', result.message)
+      console.info('积分签到：', result.message)
     }
   } else {
-    console.log('积分签到：', result.message)
+    console.info('积分签到：', result.message)
   }
 }

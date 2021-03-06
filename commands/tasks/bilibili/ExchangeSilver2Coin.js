@@ -8,7 +8,7 @@ module.exports = async (axios) => {
       url: `https://api.live.bilibili.com/pay/v1/Exchange/silver2coin`,
       method: 'get'
     }).then(res => {
-      console.log("银瓜子兑换硬币：", res.data.message)
+      console.info("银瓜子兑换硬币：", res.data.message)
       resolve(res.data)
     }).catch(reject)
   })

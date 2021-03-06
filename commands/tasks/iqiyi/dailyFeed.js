@@ -29,7 +29,7 @@ function w() {
 }
 
 module.exports = async (axios) => {
-  console.log('访问热点首页')
+  console.info('访问热点首页')
 
   let { config } = await axios.request({
     headers: {
@@ -82,9 +82,9 @@ module.exports = async (axios) => {
 
   data = res.data.data
   if (res.data.code === 'A0000' && data.length) {
-    console.log('访问热点首页：', "签到成功！")
+    console.info('访问热点首页：', "签到成功！")
   } else {
-    console.log('访问热点首页：', res.data.message || "无")
+    console.info('访问热点首页：', res.data.message || "无")
   }
 
   // a = {
@@ -119,9 +119,9 @@ module.exports = async (axios) => {
   // })
   // data = res.data.data
   // if (res.data.code === 'A00000' && data.length) {
-  //   console.log('访问热点首页：', "签到成功！成长值+" + data.score + "1点")
+  //   console.info('访问热点首页：', "签到成功！成长值+" + data.score + "1点")
   // } else {
-  //   console.log('访问热点首页：', res.data.message || "无")
+  //   console.info('访问热点首页：', res.data.message || "无")
   // }
 
 }

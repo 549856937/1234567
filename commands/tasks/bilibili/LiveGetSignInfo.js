@@ -9,9 +9,9 @@ module.exports = (axios) => {
       }).then(res => {
         let result = res.data
         if (result.code !== 0) {
-          console.log('获取当月直播签到状态失败', result.message)
+          console.info('获取当月直播签到状态失败', result.message)
         } else {
-          console.log('获取当月直播签到状态成功 ','累计签到'+result.data.hadSignDays+'/'+result.data.allDays)
+          console.info('获取当月直播签到状态成功 ','累计签到'+result.data.hadSignDays+'/'+result.data.allDays)
           resolve(result.data)
         }
       }).catch(reject)

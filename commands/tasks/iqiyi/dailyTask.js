@@ -12,7 +12,7 @@ function w() {
 
 var task = {
     getTasks: async (axios) => {
-        console.log('查询每日任务列表')
+        console.info('查询每日任务列表')
         let P00001 = undefined
         axios.defaults.headers.Cookie.split('; ').forEach(item => {
             if (item.indexOf('P00001') === 0) {
@@ -31,14 +31,14 @@ var task = {
             }
         })
         if (data.code === 'A00000') {
-            console.log('获取成功')
+            console.info('获取成功')
             return data.data
         } else {
-            console.log(data.msg)
+            console.info(data.msg)
         }
     },
     getTaskStatus: async (axios, taskIds) => {
-        console.log('查询每日任务状态')
+        console.info('查询每日任务状态')
         let P00001 = undefined
         axios.defaults.headers.Cookie.split('; ').forEach(item => {
             if (item.indexOf('P00001') === 0) {
@@ -69,14 +69,14 @@ var task = {
             params: r
         })
         if (data.code === 'A00000') {
-            console.log('获取成功')
+            console.info('获取成功')
             return data.data
         } else {
-            console.log(data.msg)
+            console.info(data.msg)
         }
     },
     joinTasks: async (axios, tasks) => {
-        console.log('开始参与任务')
+        console.info('开始参与任务')
         let P00001 = undefined
         axios.defaults.headers.Cookie.split('; ').forEach(item => {
             if (item.indexOf('P00001') === 0) {
@@ -102,9 +102,9 @@ var task = {
                 params: params
             })
             if (data.code === 'A00000') {
-                console.log(`参与任务[${task.taskTitle}]：`, '成功')
+                console.info(`参与任务[${task.taskTitle}]：`, '成功')
             } else {
-                console.log(`参与任务[${task.taskTitle}]：`, data.msg)
+                console.info(`参与任务[${task.taskTitle}]：`, data.msg)
             }
         }
     },
@@ -118,20 +118,20 @@ var task = {
             method: 'post'
         })
         if (data.code === 'A00000') {
-            console.log(`完成任务[${taskn.taskCode}, ${taskn.taskTitle}]：`, '成功')
-            data.dataNew.length ? console.log(data.dataNew.map(i => i.name + i.value).join(',')) : ''
+            console.info(`完成任务[${taskn.taskCode}, ${taskn.taskTitle}]：`, '成功')
+            data.dataNew.length ? console.info(data.dataNew.map(i => i.name + i.value).join(',')) : ''
         } else if ("Q00700" === data.code) {
-            console.log(`Q00700：跳过任务[${taskn.taskCode}, ${taskn.taskTitle}]：`)
+            console.info(`Q00700：跳过任务[${taskn.taskCode}, ${taskn.taskTitle}]：`)
             // await task.getTaskReward(axios, taskn, {
             //     ...a,
             //     token: data.data.token
             // })
         } else {
-            console.log(`完成任务[${taskn.taskCode}, ${taskn.taskTitle}]：`, data.msg)
+            console.info(`完成任务[${taskn.taskCode}, ${taskn.taskTitle}]：`, data.msg)
         }
     },
     completeTasks: async (axios, tasks) => {
-        console.log('开始完成任务')
+        console.info('开始完成任务')
         let P00001 = undefined
         let QC005 = undefined
         let dfp = undefined

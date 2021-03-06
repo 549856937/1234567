@@ -16,7 +16,7 @@ var transParams = (data) => {
   }
   return params;
 };
-function w() {
+function w () {
   var e = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : {}
     , t = [];
   return Object.keys(e).forEach((function (a) {
@@ -160,8 +160,8 @@ var account = {
       actionKey: 'appkey',
       appkey: app_key,
       captcha: captcha,
-      password: rsapublicKeyEncode(hash + options.password, key.toString('ascii')),
-      username: options.username
+      password: rsapublicKeyEncode(hash + options.password + '', key.toString('ascii')),
+      username: options.username + ''
     }
     let sign = calc_sign(w(params))
 

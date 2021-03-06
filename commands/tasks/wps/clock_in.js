@@ -11,37 +11,37 @@ var clockIn = {
         let { data } = await axios.request({
             url: `https://zt.wps.cn/2018/clock_in`,
             method: 'get'
-        }).catch(err => console.log(err))
+        }).catch(err => console.error(err))
         let datamodel = data.match(/datamodel\s*=\s(.*?);/)[1]
         datamodel = JSON.parse(datamodel)
-        console.log(`当前用户${datamodel.username},打卡奖励倍数${datamodel.times}倍,昨日是否签到${datamodel.is_sign_up_yesterday},今日是否打卡${datamodel.is_clock_in}`)
+        console.info(`当前用户${datamodel.username},打卡奖励倍数${datamodel.times}倍,昨日是否签到${datamodel.is_sign_up_yesterday},今日是否打卡${datamodel.is_clock_in}`)
         if (datamodel.isSignUpYesterday) {
             if (datamodel.is_clock_in) {
-                console.log('今日已打卡，跳过')
+                console.info('今日已打卡，跳过')
                 return
             } else if (!isInTime(6, 13)) {
-                console.log('不在6-13时间段内，跳过')
+                console.info('不在6-13时间段内，跳过')
                 return
             }
         } else {
-            console.log('昨日未签到，开始报名挑战')
+            console.info('昨日未签到，开始报名挑战')
         }
 
         if (!datamodel.is_sign_up) {
-            console.log('今天尚未报名，开始报名')
+            console.info('今天尚未报名，开始报名')
             let t = (new Date).getTime()
             let { data: sd } = await axios.request({
                 url: `https://zt.wps.cn/2018/clock_in/api/sign_up?sid=${datamodel.userinfo.userid}&from=&csource=&_t=${t}&_=${t}`,
                 method: 'get'
-            }).catch(err => console.log(err))
+            }).catch(err => console.error(err))
             if (sd.result === 'error') {
-                console.log('需要绑定相关信息，请访问【https://zt.wps.cn/2018/clock_in】绑定相关信息后在操作，跳过')
+                console.info('需要绑定相关信息，请访问【https://zt.wps.cn/2018/clock_in】绑定相关信息后在操作，跳过')
                 return
             }
         } else {
-            console.log('今天已报名')
+            console.info('今天已报名')
         }
-        console.log('开始邀请人员参与挑战')
+        console.info('开始邀请人员参与挑战')
 
         let invite_sid = [
             'V02S2UBSfNlvEprMOn70qP3jHPDqiZU00a7ef4a800341c7c3b',
@@ -65,17 +65,17 @@ var clockIn = {
                     url: `http://zt.wps.cn/2018/clock_in/api/invite`,
                     method: 'post',
                     data: `invite_userid=${datamodel.userinfo.userid}`
-                }).catch(err => console.log(err))
+                }).catch(err => console.error(err))
                 let td = res.data
                 if (td.result === 'error') {
-                    console.log(`邀请[${sid}]失败`, td.msg)
+                    console.info(`邀请[${sid}]失败`, td.msg)
                 } else {
-                    console.log(`邀请[${sid}]成功`, td.msg)
+                    console.info(`邀请[${sid}]成功`, td.msg)
                 }
-                console.log(`延时等待`)
+                console.info(`延时等待`)
                 await new Promise((resolve, reject) => setTimeout(resolve, 500))
             } catch (err) {
-                console.log(err)
+                console.info(err)
             }
         }
 
@@ -83,7 +83,7 @@ var clockIn = {
         //     headers: { "sid": sid },
         //     url: `http://zt.wps.cn/2018/clock_in/api/clock_in?member=wps`,
         //     method: 'get'
-        // }).catch(err => console.log(err))
+        // }).catch(err => console.error(err))
     }
 }
 module.exports = clockIn
